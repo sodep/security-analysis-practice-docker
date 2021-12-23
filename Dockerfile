@@ -38,9 +38,6 @@ RUN apt-get install -y --no-install-recommends \
 	libxrender1 \
 	libxtst6
 
-## Install libpng12
-RUN wget http://nl.archive.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb
-RUN dpkg -i libpng12-0_1.2.54-1ubuntu1_amd64.deb
 
 ## Add php repository
 RUN add-apt-repository ppa:ondrej/php -y
@@ -53,8 +50,27 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
 ## Installs PHP
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	php7.4-cli \
+RUN apt-get update && \
+    apt-get -y install \
+        php-cli \
+        php-curl \
+        php-mbstring \
+        php-gd \
+        php-mysql \
+        php-json \
+        php-ldap \
+        php-mime-type \
+		php-pgsql \
+        php-tidy \
+        php-intl \
+        php-xmlrpc \
+        php-soap \
+        php-uploadprogress \
+        php-zip && \
+    apt-get -y autoremove && \
+    apt-get -y install --no-install-recommends imagemagick && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 	
 
 ## Upgrades
@@ -74,5 +90,31 @@ RUN mv composer.phar /usr/local/bin/composer
 ## Add composer bin to PATH
 ENV PATH "$PATH:$HOME/.composer/vendor/bin"
 
+
 ## Install composer plugins
 RUN /usr/local/bin/composer global require "laravel/envoy:^1.4"
+
+RUN mkdir -p "/usr/course"
+WORKDIR /usr/course/
+RUN git clone https://github.com/sonatype-nexus-community/bach.git
+WORKDIR /usr/course/bach
+RUN composer install
+
+
+RUN echo "Adding repositories"
+RUN mkdir -p "/usr/course/repositories/sonar"
+WORKDIR /usr/course/repositories/sonar
+RUN git  clone https://github.com/digininja/DVWA
+RUN mkdir -p "/usr/course/repositories/snyk"
+WORKDIR /usr/course/repositories/snyk
+RUN git clone https://github.com/marcosechague/xvwa.git
+RUN mkdir -p "/usr/course/repositories/bach"
+WORKDIR /usr/course/repositories/bach
+RUN git clone https://github.com/xthk/fake-vulnerabilities-php-composer.git
+
+#WORKDIR /usr/course/repositories/
+#COPY 1-sonar-DVWA sonar/
+#COPY 2-snyk-xvwa snyk/
+#COPY 3-bach-fake-vulnerabilities-php-composer bach/
+
+CMD ["bash"]
