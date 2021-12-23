@@ -7,4 +7,4 @@ mkdir workspace
 docker build  -t "curso" .
 
 #Crea compose de dockers
-#docker-compose up
+docker-compose up

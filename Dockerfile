@@ -1,6 +1,6 @@
 #############################################################################
 # Dockerfile to build an image with Git, php-cli and composer
-# Based on yesops/ubuntu:latest                                         
+# Based on yesops/ubuntu:latest
 #############################################################################
 
 ## Set the base image to Ubuntu
@@ -10,7 +10,7 @@ MAINTAINER Sodep <info@sodep.com.py>
 
 # Set the locale
 RUN apt-get clean && apt-get update
-RUN apt-get -y install  wget locales locales-all 
+RUN apt-get -y install  wget locales locales-all
 
 ## Update locale
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -71,7 +71,7 @@ RUN apt-get update && \
     apt-get -y install --no-install-recommends imagemagick && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-	
+
 
 ## Upgrades
 RUN apt-get dist-upgrade -y
@@ -111,10 +111,5 @@ RUN git clone https://github.com/marcosechague/xvwa.git
 RUN mkdir -p "/usr/course/repositories/bach"
 WORKDIR /usr/course/repositories/bach
 RUN git clone https://github.com/xthk/fake-vulnerabilities-php-composer.git
-
-#WORKDIR /usr/course/repositories/
-#COPY 1-sonar-DVWA sonar/
-#COPY 2-snyk-xvwa snyk/
-#COPY 3-bach-fake-vulnerabilities-php-composer bach/
 
 CMD ["bash"]
