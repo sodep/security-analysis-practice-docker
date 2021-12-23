@@ -116,5 +116,7 @@ WORKDIR /opt/sonar-scanner
 COPY  sonar-scanner .
 ENV PATH="/opt/sonar-scanner/bin:${PATH}"
 
+RUN apt-get -y install telnet
+
 WORKDIR /usr/course
 CMD ["bash"]
