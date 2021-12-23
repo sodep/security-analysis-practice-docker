@@ -81,7 +81,6 @@ RUN apt-get update && apt-get install -y nodejs npm
 
 ## Install Snyk cli
 RUN npm install snyk@latest -g
-RUN mkdir -p /usr/Programs
 
 ## Install composer
 RUN curl -sS https://getcomposer.org/installer | php
@@ -112,4 +111,10 @@ RUN mkdir -p "/usr/course/repositories/bach"
 WORKDIR /usr/course/repositories/bach
 RUN git clone https://github.com/xthk/fake-vulnerabilities-php-composer.git
 
+RUN mkdir -p "/opt/sonar-scanner"
+WORKDIR /opt/sonar-scanner
+COPY  sonar-scanner .
+ENV PATH="/opt/sonar-scanner/bin:${PATH}"
+
+WORKDIR /usr/course
 CMD ["bash"]
