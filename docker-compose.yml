@@ -2,7 +2,7 @@ version: "2"
 
 services:
   server:
-    image: curso
+    image: curso-sodep
     ports:
       - "8080:8080"
     networks:

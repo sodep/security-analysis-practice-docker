@@ -7,4 +7,4 @@ mkdir workspace
 docker build  -t "curso-sodep" .
 
 #Crea compose de dockers
-#docker-compose up
+docker-compose up
