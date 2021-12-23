@@ -36,11 +36,12 @@ RUN apt-get install -y --no-install-recommends \
 	make \
 	mcrypt \
 	libxrender1 \
-	libxtst6
+	libxtst6 
 
 ## Install libpng12
-RUN wget http://nl.archive.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb
-RUN dpkg -i libpng12-0_1.2.54-1ubuntu1_amd64.deb
+RUN add-apt-repository ppa:linuxuprising/libpng12
+RUN apt-get clean && apt-get update
+RUN apt-get install -y --no-install-recommends libpng12-0
 
 ## Add php repository
 RUN add-apt-repository ppa:ondrej/php -y
@@ -48,13 +49,14 @@ RUN add-apt-repository ppa:ondrej/php -y
 ## Add git repository
 RUN add-apt-repository ppa:git-core/ppa -y
 
-## Add yarn repository
+# Install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install yarn -y
+RUN yarn --version
 
 ## Installs PHP
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	php7.4-cli \
+RUN apt-get update && apt-get install -y --no-install-recommends php7.4-cli 
 	
 
 ## Upgrades
@@ -75,4 +77,4 @@ RUN mv composer.phar /usr/local/bin/composer
 ENV PATH "$PATH:$HOME/.composer/vendor/bin"
 
 ## Install composer plugins
-RUN /usr/local/bin/composer global require "laravel/envoy:^1.4"
+#RUN /usr/local/bin/composer global require "laravel/envoy:^1.4"
