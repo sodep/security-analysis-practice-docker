@@ -1,5 +1,9 @@
 # Docker para practicas de analisis de seguridad SAST PHP
 
+## Requisitos:
+- Docker
+- Docker compose
+
 ## Levantar el docker:
 
 Ejecutar los siguientes comandos:
@@ -34,21 +38,25 @@ Estos repositorios se encuentran sincronizados por un volumen docker de la sigui
 El analisis con  bach y sonar se realizara con los proyectos clonados,
 Lo proyectos se encuentran en la carpeta `/usr/course/repositories/bach` y `/usr/course/repositories/sonar` respectivamente en el contenedor ubuntu.
 
+## Practica
 #### Con bach lo haremos en el contenedor ubuntu, el comando es el siguiente :
 ``php bach/bach composer repositories/bach/fake-vulnerabilities-php-composer/composer.json``
 
 #### Con sonar realizaremos el siguiente analisis:
 (Para el sonar, en lugar de utilizar http://localhost:9000, usar http://sonarqube:9000)
 
-- Verificarcion de los errores criticos de seguridad, y los Hotspot de seguridad
+- Configurar un nuevo proyecto en Sonar
+- Correr el script generado en la carpeta raiz del proyecto a ser analizado por Sonar.
+- Verificar los errores criticos de seguridad, y los Hotspot de seguridad
 - Eliminarlos como minimo 3
 - Volver a correr los analisis
 - Verificar que ya no existan errors criticos, ni los hotspots
 
 #### Con el snyk lo haremos a traves de github
+- Crear una cuenta en Snyk, a traves de GitHub (Si no la tienes, crear una)
 - Crear un fork del repositorio: https://github.com/marcosechague/xvwa.git
-- Crear una cuenta en Snyk, a traves de GitHub (Si no la tiene, crear una)
-- Agrear el proyecto Github de tu for, al Snyk
+- Agrear el proyecto Github de tu fork, al Snyk
 - Correr el analisis
+- Verificar los errores/dependencias con vulnerabilidates criticas.
 - Eliminar las vulnerabilidades criticas, al menos 3
-- Volver a correr el analisis
+- Volver a correr el analisis y verificar que ya no esten las vulnerabilidades ajustadas

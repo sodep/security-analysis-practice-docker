@@ -14,6 +14,8 @@ services:
       - db
       - sonarqube
     volumes:
+      # Para windows, en lugar de la barra '/', utiliar barra invertida, es decir:
+      # .\workspace:/root/workspace
       - ./workspace:/root/workspace
       - ./sonar:/usr/course/repositories/sonar
       - ./snyk:/usr/course/repositories/snyk
