@@ -102,14 +102,9 @@ RUN composer install
 
 RUN echo "Adding repositories"
 RUN mkdir -p "/usr/course/repositories/sonar"
-WORKDIR /usr/course/repositories/sonar
-RUN git  clone https://github.com/digininja/DVWA
 RUN mkdir -p "/usr/course/repositories/snyk"
-WORKDIR /usr/course/repositories/snyk
-RUN git clone https://github.com/marcosechague/xvwa.git
 RUN mkdir -p "/usr/course/repositories/bach"
-WORKDIR /usr/course/repositories/bach
-RUN git clone https://github.com/xthk/fake-vulnerabilities-php-composer.git
+WORKDIR /tmp
 
 RUN mkdir -p "/opt/sonar-scanner"
 WORKDIR /opt/sonar-scanner

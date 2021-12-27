@@ -18,21 +18,32 @@ El sonar debe estar corriendo en localhost:9000, el usuario pass por defecto es 
 ###Ubuntu
 Se ingresa a la terminal mediante el comando:
 
-`docker exec -it security-analysis-practice-docker_server_1 /bin/bash`
+`docker exec -it docker_server /bin/bash`
 
 ##Analisis de seguridad
-El analisis con sonar y bach se realizara con los proyectos clonados,
-Lo proyectos se encuentran en la carpeta `/usr/course/repositories/sonar` y `/usr/course/repositories/bach` respectivamente en el contenedor ubuntu.
-Para el sonar, en lugar de utilizar http://localhost:9000, usar http://sonarqube:9000
+Los repositorios se encuentran para ser analizados por las herramientas correspondientes, se encuentran en la raiz del proyecto con la capeta de la herramienta.
+
+Ejemplo, en la raiz del proyecto, existe la carpeta ``sonar``, en la misma se encuentra el repositorio para ser analizado por la herramienta sonar, de la misma forma para las demas herramientas (snyk, bach)
+
+Estos repositorios se encuentran sincronizados por un volumen docker de la siguiente manera:
+
+ - sonar -> /usr/course/repositories/sonar 
+ - snyk -> /usr/course/repositories/snyk 
+ - bach -> /usr/course/repositories/bach
+
+El analisis con  bach y sonar se realizara con los proyectos clonados,
+Lo proyectos se encuentran en la carpeta `/usr/course/repositories/bach` y `/usr/course/repositories/sonar` respectivamente en el contenedor ubuntu.
+
+####Con bach lo haremos en el contenedor ubuntu, el comando es el siguiente :
+- php bach/bach composer repositories/bach/fake-vulnerabilities-php-composer/composer.json
 
 ####Con sonar realizaremos el siguiente analisis:
+(Para el sonar, en lugar de utilizar http://localhost:9000, usar http://sonarqube:9000)
+
 - Verificarcion de los errores criticos de seguridad, y los Hotspot de seguridad
 - Eliminarlos como minimo 3
 - Volver a correr los analisis
 - Verificar que ya no existan errors criticos, ni los hotspots
-
-####Con bach lo haremos en el contenedor ubuntu, el comando es el siguiente :
-- php bach/bach composer repositories/bach/fake-vulnerabilities-php-composer/composer.json
 
 ####Con el snyk lo haremos a traves de github
 - Crear un fork del repositorio: https://github.com/marcosechague/xvwa.git

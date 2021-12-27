@@ -2,6 +2,7 @@ version: "2"
 
 services:
   server:
+    container_name: docker_server
     image: curso
     ports:
       - "8080:8080"
@@ -14,11 +15,15 @@ services:
       - sonarqube
     volumes:
       - ./workspace:/root/workspace
-      - ./course:/usr/course
+      - ./sonar:/usr/course/repositories/sonar
+      - ./snyk:/usr/course/repositories/snyk
+      - ./bach:/usr/course/repositories/bach
+
     stdin_open: true # docker run -i
     tty: true        # docker run -t
 
   sonarqube:
+    container_name: sonarqube_lts
     image: sonarqube:lts
     ports:
       - "9000:9000"
